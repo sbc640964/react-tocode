@@ -1,0 +1,107 @@
+{
+  "rows":
+  [
+    {
+      "id" : 1,
+      "user" : {
+        "id" : 1,
+        "name" : "ישראל"
+      },
+      "input_type" : "ivr",
+      "category": {
+        "id" : 1,
+        "name" : "משכורת בעל - עבודה בוקר",
+        "type" : "income"
+      },
+      "repeate_oparation" : {
+        "id" : 1,
+        "type" : "variable"
+      },
+      "note": "קיבלתי מאוחר!!!",
+      "amount": 2875.00,
+      "debt" : 0,
+      "date" : 105845155
+    },
+    {
+      "id" : 2,
+      "user" : {
+        "id" : 1,
+        "name" : "ישראל"
+      },
+      "input_type" : "ivr",
+      "category": {
+        "id" : 1,
+        "name" : "משכורת בעל - עבודה בוקר",
+        "type" : "income"
+      },
+      "repeate_oparation" : false,
+      "note": "קיבלתי מאוחר!!!",
+      "amount": 214.00,
+      "debt" : 0,
+      "date" : 105454555
+    },
+    {
+      "id" : 3,
+      "user" : {
+        "id" : 1,
+        "name" : "ישראל"
+      },
+      "input_type" : "ivr",
+      "category": {
+        "id" : 1,
+        "name" : "משכורת בעל - עבודה בוקר",
+        "type" : "income"
+      },
+      "repeate_oparation" : {
+        "id" : 1,
+        "type" : "variable"
+      },
+      "note": "קיבלתי מאוחר!!!",
+      "amount": 2875.00,
+      "debt" : 0,
+      "date" : 105845155
+    },
+    {
+      "id" : 4,
+      "user" : {
+        "id" : 1,
+        "name" : "ישראל"
+      },
+      "input_type" : "ivr",
+      "category": {
+        "id" : 1,
+        "name" : "משכורת בעל - עבודה בוקר",
+        "type" : "income"
+      },
+      "repeate_oparation" : {
+        "id" : 1,
+        "type" : "variable"
+      },
+      "note": "קיבלתי מאוחר!!!",
+      "amount": 2875.00,
+      "debt" : 0,
+      "date" : 105845155
+    },
+    {
+      "id" : 5,
+      "user" : {
+        "id" : 1,
+        "name" : "ישראל"
+      },
+      "input_type" : "ivr",
+      "category": {
+        "id" : 1,
+        "name" : "משכורת בעל - עבודה בוקר",
+        "type" : "income"
+      },
+      "repeate_oparation" : {
+        "id" : 1,
+        "type" : "variable"
+      },
+      "note": "קיבלתי מאוחר!!!",
+      "amount": 2875.00,
+      "debt" : 0,
+      "date" : 105845155
+    }
+  ]
+}
