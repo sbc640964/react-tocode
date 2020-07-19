@@ -23,7 +23,6 @@ const InputDiv = styled.div`
         margin: 10px;
         padding: 3px;
         border: 1px solid #d5d5d5;
-        border-radius: 4px;
-        
+        border-radius: 4px;  
     }
 `;
