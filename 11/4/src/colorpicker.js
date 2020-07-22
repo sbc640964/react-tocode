@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import tinycolor from 'tinycolor2';
 
 import '../css/main.css';
+
 export default function ({ color }) {
     const [currentColor, setCurrentColor] = useState(color);
 
