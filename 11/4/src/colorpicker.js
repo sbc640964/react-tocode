@@ -23,9 +23,11 @@ export default function (props) {
         }
 
         divs.push(
-            <label>
-                <input type="color" onChange={(e) => setColor(e.target.value)}/>
-            </label>
+            <div>
+                <label>
+                    <input type="color" onChange={(e) => setColor(e.target.value)}/>
+                </label>
+            </div>
         );
 
         currentColor = tinycolor(color).lighten(5);
@@ -41,10 +43,8 @@ export default function (props) {
     }
 
     return(
-     <div>
         <div className="div-colors-result">
             {createDivs()}
         </div>
-     </div>
     )
 }
