@@ -2,49 +2,40 @@ import React, {useState} from 'react';
 import tinycolor from 'tinycolor2';
 
 import '../css/main.css';
+import _ from 'lodash';
 
+function LigherDivs({ color }) {
+  return _.range(5).map((i) =>
+    <div style={{background: color.lighten(5).toString()}}></div>
+  );
+}
+
+function DarkerDivs({ color }) {
+  return _.range(5).map((i) =>
+    <div style={{background: color.darken(5).toString()}}></div>
+  );
+}
+
+function ColorPicker({ setColor }) {
+  return (
+    <div>
+      <label>
+        <input type="color" onChange={(e) => setColor(e.target.value)}/>
+      </label>
+    </div>
+  );
+}
 
 export default function (props) {
-    const {defaultColor} = props;
+  const {defaultColor} = props;
 
-    const [color, setColor] = useState(defaultColor ? defaultColor : '');
+  const [color, setColor] = useState(defaultColor ? defaultColor : '');
 
-
-    function createDivs() {
-
-        let currentColor = tinycolor(color).darken(5*4);
-
-        const divs = [];
-        for(let i = 0; i < 5; i++){
-            console.log(i)
-            divs.push(
-                <div style={{background: currentColor.lighten(5).toString()}}></div>
-            );
-        }
-
-        divs.push(
-            <div>
-                <label>
-                    <input type="color" onChange={(e) => setColor(e.target.value)}/>
-                </label>
-            </div>
-        );
-
-        currentColor = tinycolor(color).lighten(5);
-
-        for(let i = 0; i < 5; i++){
-            console.log(i)
-            divs.push(
-                <div style={{background: currentColor.darken(5).toString()}}></div>
-            );
-        }
-
-        return divs;
-    }
-
-    return(
-        <div className="div-colors-result">
-            {createDivs()}
-        </div>
-    )
+  return(
+    <div className="div-colors-result">
+      <LigherDivs color={tinycolor(color).darken(5*4)} />
+      <ColorPicker setColor={setColor} />
+      <DarkerDivs color={tinycolor(color).lighten(5)} />
+    </div>
+  )
 }
