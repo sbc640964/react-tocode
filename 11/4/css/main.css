@@ -4,32 +4,43 @@ body {
   direction: rtl;
   font-family: 'Assistant', sans-serif;
 }
+
+h3{
+  position: relative;
+  display: block;
+  line-height: 65px;
+  font-size: 50px;
+  margin: 0px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+input:focus{
+  outline: none;
+}
+
 /* Firefox */
 input[type=color] {
-  height: 100px;
-  width: 100px;
-  border-radius: 8px;
+  font-size: 60px;
+  text-align: center;
+  margin: auto;
+  height: 50px;
+  width: 50px;
 }
 
 label{
-  display: flex;
-  flex-flow: column;
-  width: 100px;
-  height: 100px;
-  align-items: center;
-  justify-content: center;
-
+  margin: auto;
+  display: block;
+  text-align: center;
 }
 
 div{
   margin: 15px auto;
   background-color: #fff;
   border-radius: 8px;
-  width: max-content;
   line-height: 40px;
   font-size: 20px;
   border: 1px solid;
-  text-align: center;
 }
 
 .div-colors-result{

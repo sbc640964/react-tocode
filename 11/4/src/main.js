@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-import ColorPicker from './colorpicker';
-
 const App = () => {
 
   return (
-    <ColorPicker defaultColor="001c8a"/>
+    <>
   )
 };
 
