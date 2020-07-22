@@ -5,17 +5,21 @@ body {
   font-family: 'Assistant', sans-serif;
 }
 
-h3{
-  position: relative;
-  display: block;
-  line-height: 65px;
-  font-size: 50px;
-  margin: 0px;
-  text-align: center;
-  margin-bottom: 25px;
+div.container{
+  width: 440px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #d5d5d5;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.3);
 }
-
-input:focus{
+input[type=color]:focus{
   outline: none;
 }
 
@@ -23,32 +27,20 @@ input:focus{
 input[type=color] {
   font-size: 60px;
   text-align: center;
-  margin: auto;
-  height: 50px;
-  width: 50px;
+  height: 200px;
+  width: 200px;
 }
 
-label{
-  margin: auto;
+div.result{
+  min-height: 200px;
+  min-width: 200px;
+  border: 1px solid #696969;
   display: block;
   text-align: center;
-}
-
-div{
-  margin: 15px auto;
-  background-color: #fff;
-  border-radius: 8px;
-  line-height: 40px;
-  font-size: 20px;
-  border: 1px solid;
-}
-
-.div-colors-result{
   display: flex;
-}
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  font-weight: bold;
 
-.div-colors-result div{
-  min-width: 100px;
-  min-height: 100px;
-  margin: 10px;
 }
