@@ -1,0 +1,33 @@
+body {
+  background: beige;
+  direction: rtl;
+  padding: 50px;
+}
+
+.game{
+  display: flex;
+}
+
+.game div{
+  min-height: 100px;
+  min-width: 100px;
+  border: 1px solid;
+  margin: 10px;
+}
+
+button{
+  font-size: 20px;
+  padding: 3px 25px;
+  background: white;
+  border: 1px solid #d5d5d5;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+button:hover{
+  background: antiquewhite;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+}
+
+

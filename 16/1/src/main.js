@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ColorPicker from './colorpicker';
+
+import Container from './container';
+
 const App = () => {
 
   return (
-      <ColorPicker/>
+    <Container/>
   )
 };
 
