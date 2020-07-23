@@ -10,8 +10,15 @@ export default function () {
 
     function setPointsPlay(check){
 
+      // ternary is better used inside:
+      // const newValue = points + (check ? 10 : -5)
+      // (to save duplication)
         const newValue = check ? points+10 : points-5;
 
+      // I thought you liked ternaries...
+      // setPoints(newValue > 0 ? newValue : 0)
+      // but my favorite is:
+      // setPoints(Math.min(newValue, 0))
         if(newValue > 0) setPoints(newValue);
         else  setPoints(0);
 
