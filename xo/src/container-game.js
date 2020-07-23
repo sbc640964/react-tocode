@@ -19,7 +19,7 @@ export default function ({sound}) {
 
         const win = checkWin();
 
-        if(!win && !gameMode){
+        if(!win && !gameMode && !currentPlayer){
             autoPlayer();
         }
 
@@ -44,6 +44,8 @@ export default function ({sound}) {
         const newScores = [...scores];
         newScores[Number(currentPlayer)] = scores[Number(currentPlayer)] + 1;
         setScores(newScores);
+
+        setCurrentPlayer( v => !v);
 
         return win ? winCells : false;
     }

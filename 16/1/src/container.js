@@ -6,9 +6,9 @@ import PointsSection from './points';
 export default function () {
 
     const [points, setPoints] = useState(0);
-    const [placeRed, setPlaceRed] = useState(getRndInteger(1, 11));
+    const [placeRed, setPlaceRed] = useState(() => getRndInteger(1, 11));
 
-    function setPointsPlay(check){
+    function setPointsGame(check){
 
         const newValue = check ? points+10 : points-5;
 
@@ -25,7 +25,7 @@ export default function () {
 
     return(
         <div>
-            <Play setPointsPlay={setPointsPlay} placeRed={placeRed}/>
+            <Play setPointsGame={setPointsGame} placeRed={placeRed}/>
             <PointsSection points={points} reset={reset}/>
         </div>
     )
