@@ -19,12 +19,15 @@ export default function ContainerGame({sound}) {
 
         const win = checkWin();
 
-        if(!win && !gameMode && !currentPlayer){
-            autoPlayer();
-        }
-
         if(!win && sound){
-            //return play the click sound
+
+            if(sound){
+                //return play the click sound
+            }
+
+            if(!gameMode && !currentPlayer){
+                autoPlayer();
+            }
         }
 
         return win;
@@ -37,19 +40,23 @@ export default function ContainerGame({sound}) {
         //check if win
         //and set the scores
 
-        if(win && sound){
+        if(win) _win();
+
+        return win ? winCells : false;
+    }
+
+    function _win() {
+
+        if(sound){
             //play the win sound
         }
 
-        if(win){
-            const newScores = [...scores];
-            newScores[Number(currentPlayer)] = scores[Number(currentPlayer)] + 1;
-            setScores(newScores);
-        }
+        const newScores = [...scores];
+        newScores[Number(currentPlayer)] = scores[Number(currentPlayer)] + 1;
+        setScores(newScores);
 
         setCurrentPlayer( v => !v);
 
-        return win ? winCells : false;
     }
 
     function resetBoard() {
