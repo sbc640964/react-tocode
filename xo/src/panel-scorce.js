@@ -5,7 +5,7 @@ export default function (props) {
     const {gameMode, setGameMode, scores} = props;
 
     return(
-        <div>
+        <div className="panel-scores">
             <div>
                 <div onClick={ () => setGameMode(v => !v)}>
                     <h3>players</h3>

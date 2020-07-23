@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 
+import '../css/main.css';
 
-export default function (props) {
+export default function Board(props) {
 
     const {cells, clicked, resetBoard} = props;
     const [winCells, setWinCells] = useState(Array(3).fill(Array(3).fill(false)));
@@ -18,23 +19,31 @@ export default function (props) {
 
     function _clicked(i, j) {
 
-        const _winCells = clicked(i, j);
-        if (_winCells) setWinCells(_winCells);
+        if(cells[i][j] !== null) return;
 
-        setTimeout( () => {
-            resetBoard();
-        }, 2000);
+        const _winCells = clicked(i, j);
+
+        if (_winCells) {
+
+            setWinCells(_winCells);
+
+            setTimeout( () => {
+                resetBoard();
+            }, 2000);
+        }
     }
 
     return(
-        <div>
-            {cells.map((row, i) => {
-                row.map((cell, j) => (
-                    <div onClick={() => _clicked(i, j)} className={winCells[i][j] ? 'pulse' : ''}>
-                        {renderCell(i, j)}
-                    </div>
-                ))
-            })}
+        <div className="board">
+            {cells.map((row, i) => (
+                <div key={i}>
+                    {row.map((cell, j) => (
+                        <div key={i} onClick={() => _clicked(i, j)} className={winCells[i][j] ? 'pulse' : ''}>
+                            {renderCell(i, j)}
+                        </div>
+                    ))}
+                </div>
+            ))}
         </div>
     )
 }

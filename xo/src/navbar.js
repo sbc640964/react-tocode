@@ -1,16 +1,14 @@
 import React from 'react';
 
-export default function ({setSound}) {
+export default function NavBar({setSound, sound}) {
 
     return(
         <nav>
             <div>
-                <icon onClick={() => setSound(v => !v)}></icon>
+                <i onClick={() => setSound(v => !v)}>{sound ? 'MIT' : 'SOUND'}</i>
             </div>
             <div>
-                <a>
-                    <icon></icon>
-                </a>
+                <a>LINK</a>
             </div>
         </nav>
     )

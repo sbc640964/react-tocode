@@ -3,11 +3,11 @@ import React, {useState} from 'react';
 import Board from './board';
 import PanelScores from './panel-scorce';
 
-export default function ({sound}) {
+export default function ContainerGame({sound}) {
 
     const [currentPlayer, setCurrentPlayer] = useState(false);
     const [gameMode, setGameMode] = useState(false);
-    const [cells, setCells] = useState(() => Array(3).fill(Array(3).fill(0)));
+    const [cells, setCells] = useState(() => Array(3).fill(Array(3).fill(null)));
     const [scores, setScores] = useState([0,0,0]);
 
     function clicked(topIndex, index){
@@ -32,8 +32,8 @@ export default function ({sound}) {
 
     function checkWin(){
 
-        let win;
-        let winCells;
+        let win = false;
+        let winCells = false;
         //check if win
         //and set the scores
 
@@ -41,9 +41,11 @@ export default function ({sound}) {
             //play the win sound
         }
 
-        const newScores = [...scores];
-        newScores[Number(currentPlayer)] = scores[Number(currentPlayer)] + 1;
-        setScores(newScores);
+        if(win){
+            const newScores = [...scores];
+            newScores[Number(currentPlayer)] = scores[Number(currentPlayer)] + 1;
+            setScores(newScores);
+        }
 
         setCurrentPlayer( v => !v);
 
@@ -52,7 +54,7 @@ export default function ({sound}) {
 
     function resetBoard() {
         setCurrentPlayer(false);
-        setCells(Array(3).fill(Array(3).fill(0)));
+        setCells(Array(3).fill(Array(3).fill(null)));
 
         if(!gameMode){
             autoPlayer();
@@ -69,7 +71,7 @@ export default function ({sound}) {
     }
 
     return(
-        <div>
+        <div className="container">
             <Board cells={cells} clicked={clicked} win={[/**/]} resetBoard={resetBoard}/>
             <PanelScores gameMode={gameMode} setGameMode={setGameMode} scores={scores}/>
         </div>

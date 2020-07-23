@@ -9,7 +9,10 @@ import ContainerGame from './container-game';
 const App = () => {
   const [sound, setSound] = useState(null);
   return (
-    <ContainerGame sound={sound}/>
+      <>
+      <NaveBar setSound={setSound} sound={sound}/>
+      <ContainerGame sound={sound}/>
+      </>
   )
 };
 
