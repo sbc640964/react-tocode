@@ -1,0 +1,84 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "user": {
+        "id": 1,
+        "name": "ישראל"
+      },
+      "input_type": "ivr",
+      "category": {
+        "id": 1,
+        "name": "משכרות בעל",
+        "type": "income",
+        "parent": 0
+      },
+      "repeat_operation": {
+        "id": 1,
+        "type": "variable"
+      },
+      "note": "קיבלתי מאוחר!!!",
+      "amount": 2458.00,
+      "balance": 5500.00,
+      "direction": "in",
+      "debt": 0,
+      "payment_method": false,
+      "date": 15245484
+    },
+    {
+      "id": 2,
+      "user": {
+        "id": 1,
+        "name": "ישראל"
+      },
+      "input_type": "site",
+      "category": {
+        "id": 3,
+        "name": "מזון ומחיה",
+        "type": "expenditure",
+        "parent": 0
+      },
+      "repeat_operation": 0,
+      "note": "שופרסל",
+      "amount": 150.20,
+      "balance": 5780.00,
+      "direction": "out",
+      "debt": 0,
+      "payment_method": "card",
+      "date": 15584771
+    },
+    {
+      "id": 3,
+      "user": {
+        "id": 1,
+        "name": "ישראל"
+      },
+      "input_type": "site",
+      "category": {
+        "id": 1,
+        "name": "חוב ליעקב",
+        "type": "debt",
+        "parent": {
+          "id": 8,
+          "name": "החזר חובות עבור השקעה",
+          "parent": 0
+        }
+      },
+      "repeat_operation": 0,
+      "note": "",
+      "amount": 840.00,
+      "balance": 47800.00,
+      "direction": "out",
+      "debt_id": 3,
+      "payment_method": {
+        "type": "transference",
+        "type_he": "העברה בנקאית",
+        "data": {
+          "name": "בנק לאומי",
+          "description": "הבנק של הבית"
+        }
+      },
+      "date": 1587874771
+    }
+  ]
+}
