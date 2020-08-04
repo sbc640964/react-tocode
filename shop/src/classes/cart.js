@@ -16,7 +16,7 @@ class Cart {
     };
 
     countProductInCart(){
-        return _.size(this.productsInCart) || false;
+        return _.sumBy(this.productsInCart, i => i.quantity) || false;
     }
 
     totalPriceInCart(){
@@ -41,8 +41,7 @@ class Cart {
     }
 
     removeProduct(productId){
-        const isHas = this.isHasProductInCart(productId);
-        if(isHas) delete this.productsInCart[isHas];
+        _.remove(this.productsInCart, item => item.product.id === productId);
     }
 
     changeQuantityProduct(productId, quantity){

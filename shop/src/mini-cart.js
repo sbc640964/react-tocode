@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { observer } from "mobx-react";
 import { currencyFormat } from "./classes/utils";
+import _ from 'lodash';
 
 import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -13,10 +14,27 @@ window.cart = Cart;
 import LinkNavBar from './link-nav-bar';
 import WindowMiniCart from './window-mini-cart';
 import styled from "styled-components";
+import {autorun} from "mobx";
+import {mutate} from "swr";
 
 export default observer(function MiniCart(){
 
     const [modeWindowMiniCart, setModeWindowMiniCart] = useState(false);
+
+
+    useEffect(()=>{
+        autorun(
+            reaction => {
+                // JSON.stringify(Cart.productsInCart);
+                if(_.isEmpty(Cart.productsInCart)) {
+                    setModeWindowMiniCart(false);
+                }
+            },
+            {
+                delay: 1000
+            }
+        );
+    });
 
     const styles ={
         cartIcon : {

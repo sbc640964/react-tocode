@@ -26,7 +26,7 @@ const LinkNavBarDiv = styled.div`
   position:relative;
   
   &:hover{
-    opacity: 0.8;
+    color: rgba(255,255,255,0.85);
   }
   
   >a{
@@ -35,7 +35,7 @@ const LinkNavBarDiv = styled.div`
     color: #fff;
     
     &:hover{
-        opacity: 0.8;
+        color: rgba(255,255,255,0.85);
     }
   }
 `;

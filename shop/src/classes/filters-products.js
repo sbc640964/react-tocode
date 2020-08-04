@@ -19,9 +19,7 @@ class FiltersProducts{
     }
 
     remove(type, value){
-        const index = this.getIndexByValue(type, value);
-        if(!index) return;
-        delete this.filters[type][index];
+        _.remove(this.filters[type], item => item.id === value.id);
     }
 
     getCurrentFilters(){
