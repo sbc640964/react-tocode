@@ -26,7 +26,7 @@ export default observer(function ArchiveShop(props){
         setProducts(data);
     },[data]);
 
-    useEffect(function() {
+    useEffect(function()  {
 
         const getProductByFilters = autorun(
             reaction => {
