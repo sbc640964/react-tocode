@@ -13,28 +13,32 @@ import useSWR, {mutate, SWRConfig} from "swr";
 import {observer} from 'mobx-react'
 import { autorun } from 'mobx'
 
+import {useCancellableSWR} from "./classes/utils";
+
 
 export default observer(function ArchiveShop(props){
 
-    const configFetcher = (...args) => fetch(...args).then(res => res.json());
+    const configFetcher = {};
 
     const filters = FilterProducts.filters;
     const [products, setProducts] = useState(null);
-    const {data} = useSWR('src/jsons/products.json', configFetcher);
+    const [{data}, cancelFn] = useCancellableSWR('src/jsons/products.json');
 
     useEffect(()=>{
         setProducts(data);
     },[data]);
 
-    useEffect(function()  {
+    useEffect(function(){
 
         const getProductByFilters = autorun(
             reaction => {
+                cancelFn.cancel();
+                console.log('now');
                 mutate('src/jsons/products.json');
                 JSON.stringify(filters);
             },
             {
-                delay: 1000
+                delay: 2500
             }
         );
 

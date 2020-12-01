@@ -659,6 +659,26 @@
         }
       ],
       "stars": 4.5
+    },
+    {
+      "id": 34,
+      "name": "Product New",
+      "description": "The truth is, this is the most amazing product we have in store",
+      "category": 1,
+      "tags": [1,2,3],
+      "regular_price": 15,
+      "price": 10,
+      "exp_sale": 14574444,
+      "is_stock": true,
+      "stock": 5,
+      "image": "https://www.ivory.co.il/files/catalog/reg/1591200078n78XJ.jpg",
+      "gallery": [
+        {
+          "url": "path/to/image",
+          "title": "זו התמונה הכי יפה"
+        }
+      ],
+      "stars": 4.5
     }
 
   ]

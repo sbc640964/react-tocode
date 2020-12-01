@@ -10,7 +10,7 @@ export default function ItemRow(props) {
                 <img src="https://image.flaticon.com/icons/svg/2089/2089813.svg" alt="" width="15px"/>
             }</div>
             <div></div>
-            <div></div>
+            <div> </div>
             <hr/>
         </div>
     );
