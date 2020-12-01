@@ -83,48 +83,44 @@ export function validation(fields, errors, setErrors, state, textErrors = null) 
     return getValidate(fields);
 }
 
-export async function getAmountFromMonthlyDeposit(MonthlyDeposit, children, data, multi = true){
+export function getAmountFromMonthlyDeposit(MonthlyDeposit, children, data, multi = true){
 
 
     if(!multi) children = [children];
     const groupByYears = _.groupBy(children, (i) => i.marriageAge - i.age);
-    console.log(groupByYears)
-    data = _.sortBy(data, i => i.amount).reverse();
-    data = JSON.parse(JSON.stringify(data));
+    data = JSON.parse(JSON.stringify(_.sortBy(data, i => i.amount).reverse()));
 
     let _return = false;
 
-    await data.map( a => {
+    for(let a of data){
 
-        if(_return) return;
+        if(_return) break;
 
-        a.innerPrograms.map( (b, bi) => {
-            if(_return) return;
-            console.log('iii')
-            let _amountMonthly = (a.amount / b.doublingRatio) / b.depositMonths;
-            a.innerPrograms.points =  _amountMonthly / 10;
-            a.innerPrograms._amountMonthly = _amountMonthly;
-        });
+        a.innerPrograms = _.sortBy(a.innerPrograms, i => i.yearsOfWaiting);
 
-        let points = {};
-        Object.keys(groupByYears).map((key ) => {
-            if(_return) return;
+        for(let key in a.innerPrograms){
+            let _amountMonthly = a.innerPrograms[key].depositAmount / a.innerPrograms[key].depositMonths;
+            a.innerPrograms[key].points =  _amountMonthly / 10;
+            a.innerPrograms[key]._amountMonthly = _amountMonthly;
+        }
+
+        let points = [];
+        for(let key in groupByYears){
             let program = getNearestAmount(a.innerPrograms, Number(key), 'yearsOfWaiting');
-            points[key] = {program: program, points: program.points * groupByYears[key].length, countChildren:groupByYears[key].length}
-        });
+            points.push({program: program, points: program.points * groupByYears[key].length, countChildren:groupByYears[key].length, children:groupByYears[key]});
+        }
 
         let amountPerPoint = MonthlyDeposit / _.sumBy(points, 'points');
-
-        Object.keys(points).map( (p) => {
-            if(_return) return;
-            let totalPerChild =  (points[p].points / 2) * amountPerPoint;
-            if( totalPerChild >= points[p].program._amountMonthly){
-                _return = (totalPerChild * points[p].program.depositMonths) * points[p].program.doublingRatio;
+        for(let key in points){
+            
+            let totalPerChild =  (points[key].points / points[key].countChildren) * amountPerPoint;
+           
+            if( totalPerChild >= points[key].program._amountMonthly){
+                _return = (totalPerChild * points[key].program.depositMonths) * points[key].program.doublingRatio;
+                break;
             }
-        });
-
-    });
-
+        }
+    }
     return _return;
 }
 

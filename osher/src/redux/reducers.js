@@ -14,7 +14,7 @@ const initialState = {
     post: {
         children: [
             {id: 0, name:'חני', age: '4', marriageAge: '20'},
-            {id: 1, name:'אליעזר שמחה', age: '16', marriageAge: '20'},
+            {id: 1, name:'אליעזר שמחה', age: '4', marriageAge: '20'},
             {id: 2, name:'מושי', age: '12', marriageAge: '19'},
         ],
         methods: {
@@ -36,7 +36,7 @@ const initialState = {
             formSettings: {
                 amountField: {
                     min: 36000,
-                    max: 300000,
+                    max: 400000,
                     minMassage: {
                         before: 'סכום הלוואה מינימלי',
                         after: 'ש"ח'

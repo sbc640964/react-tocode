@@ -29,17 +29,17 @@ function FormStep4(props){
         console.log(getAmountFromMonthlyDeposit(1500, children, dataPrograms));
     }
     function handleChangeAmount(e){
-        console.log(getAmountFromMonthlyDeposit(1500, children, dataPrograms[currentProgram]));
         setAmount(e.target.value);
-        const value = e.target.value;
+        let value = e.target.value;
 
-        if(!isMonthly){
-            children.map((child) => {
-                dispatch(updateChildToMethod('regular' ,child.id, value));
-            });
-        }else{
-
+        if(isMonthly){
+            value = getAmountFromMonthlyDeposit(value, children, dataPrograms[currentProgram]);
         }
+
+        children.map((child) => {
+            dispatch(updateChildToMethod('regular' ,child.id, value));
+        });
+        
     }
 
     return(
