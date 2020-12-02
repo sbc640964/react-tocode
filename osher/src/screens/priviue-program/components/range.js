@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
-import {validation} from "../../../api-help";
+import React, {useEffect, useRef, useState} from 'react';
+import {currencyFormat, validation} from "../../../api-help";
+import Errors from "../../intro-form/components/error-form-field";
 
 
 export default function RangeInput(props){
-    const {min, max, value, _onChange, step = 1, showNumberInput = true, label} = props;
+    const {min, max, value, _onChange, step = 1, showNumberInput = true, label, required} = props;
 
     const [errors, setErrors] = useState([]);
+    const [valueB, setValueB] = useState('');
 
     const fieldValidation = [
-        `value|min:${min}|max:${max}`,
+        `value|min:${min}|max:${max}${required ? '|required' : ''}`,
     ]
-
+    useEffect( ()=>{
+        setValueB(value);
+    }, [value])
     function btnToRangePlus(){
         update(value + step);
     }
@@ -20,6 +24,10 @@ export default function RangeInput(props){
     }
 
     function onRange(e){
+        update(e.target.value);
+    }
+
+    function blurInput(e){
         update(e.target.value);
     }
 
@@ -33,10 +41,13 @@ export default function RangeInput(props){
             <div className="d-flex">
                 <span className="flex-1 font-weight-bold title">{label}</span>
                 {showNumberInput &&
-                    <div className="number-input d-flex">
-                        <span className="btn" onClick={btnToRangePlus}>+</span>
-                        <input type="number" value={value} onChange={onRange} min={min} max={max}/>
-                        <span className="btn" onClick={btnToRangeMinus}>-</span>
+                    <div>
+                        <div className="number-input d-flex">
+                            <span className="btn" onClick={btnToRangePlus}>+</span>
+                            <input type="number" value={valueB} onBlur={blurInput} onChange={e => setValueB(e.target.value)} min={min} max={max}/>
+                            <span className="btn" onClick={btnToRangeMinus}>-</span>
+                        </div>
+                        <Errors errors={errors.value}/>
                     </div>
                 }
             </div>
@@ -44,8 +55,8 @@ export default function RangeInput(props){
                 <input type="range" className="slider" min={min} max={max} value={value} step={step} onChange={onRange} dir="ltr"/>
             </div>
             <div className="d-flex slide-min-max">
-                <span className="sum max-slide">{max}</span>
-                <span className="sum min-slide">{min}</span>
+                <span className="sum max-slide">{currencyFormat(max)}</span>
+                <span className="sum min-slide">{currencyFormat(min)}</span>
             </div>
         </div>
     )

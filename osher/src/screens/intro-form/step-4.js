@@ -1,39 +1,56 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {setChildField, updateChildToMethod} from "../../redux/actions";
 
 import Actions from "./components/footer-form-actions";
 import Errors from "./components/error-form-field";
-import {getAmountFromMonthlyDeposit, validation} from "../../api-help";
+import {getAmountFromMonthlyDeposit, getMinMaxToDepositMonthly, getResultFromAmount, validation} from "../../api-help";
 
 
 function FormStep4(props){
 
-    const {children, dispatch, next, prev, settingsForm:settings, dataPrograms, currentProgram} = props
+    const {children, dispatch, next, prev, settingsForm:settings, dataPrograms, currentProgram, childrenProgram} = props
 
     const [isMonthly, SetIsMonthly] = useState(false);
-    const [amount, setAmount] = useState(null);
+    const [amount, setAmount] = useState('');
+    const [depositMonthly, setDepositMonthly] = useState('');
     const [errors, setErrors] = useState([]);
 
+    const minMax = isMonthly ?
+        getMinMaxToDepositMonthly(settings.amountField.min, settings.amountField.max, children, dataPrograms.regular):
+        {min: settings.amountField.min, max: settings.amountField.max} ;
+
+    useEffect(()=> {
+        validation(fieldsValidation(), errors, setErrors, {amount: isMonthly ? depositMonthly : amount});
+    }, [amount, depositMonthly]);
+
+    useEffect(() => {
+        if(isMonthly) return setDepositMonthly(minMax.min);
+        else setAmount(minMax.min);
+    }, [isMonthly]);
+
+    useEffect(() => {
+        setAmount(minMax.min);
+    }, []);
 
     function fieldsValidation(){
         return [
             !isMonthly ?
-                `amount|required|min:${settings.amountField.min}:${settings.amountField.minMassage.before}:${settings.amountField.minMassage.after}|max:${settings.amountField.max}:${settings.amountField.maxMassage.before}:${settings.amountField.maxMassage.after}` :
-                `amount|required|min:${settings.amountMonthlyField.min}:${settings.amountMonthlyField.minMassage.before}:${settings.amountMonthlyField.minMassage.after}|max:${settings.amountMonthlyField.max}:${settings.amountMonthlyField.maxMassage.before}:${settings.amountMonthlyField.maxMassage.after}`
+                `amount|required|min:${minMax.min}:${settings.amountField.minMassage.before}:${settings.amountField.minMassage.after}|max:${minMax.max}:${settings.amountField.maxMassage.before}:${settings.amountField.maxMassage.after}` :
+                `amount|required|min:${minMax.min}:${settings.amountMonthlyField.minMassage.before}:${settings.amountMonthlyField.minMassage.after}|max:${minMax.max}:${settings.amountMonthlyField.maxMassage.before}:${settings.amountMonthlyField.maxMassage.after}`
 
         ]
     }
 
-    function handleChangeMD(e){
-        console.log(getAmountFromMonthlyDeposit(1500, children, dataPrograms));
-    }
     function handleChangeAmount(e){
-        setAmount(e.target.value);
+
         let value = e.target.value;
 
         if(isMonthly){
+            setDepositMonthly(value);
             value = getAmountFromMonthlyDeposit(value, children, dataPrograms[currentProgram]);
+        }else{
+            setAmount(value);
         }
 
         children.map((child) => {
@@ -60,7 +77,9 @@ function FormStep4(props){
             <div className="form-field-groups">
                 <div className="form-field-group">
                     <input type="number"
-                           style={{margin: "0px"}} className="w-100"
+                           style={{margin: "0px"}}
+                           className="w-100"
+                           value={isMonthly ? depositMonthly : amount}
                            min={isMonthly ? 250 : 0}
                            max={isMonthly ? '' : 300000}
                            placeholder="הזן סכום"
@@ -70,13 +89,14 @@ function FormStep4(props){
                     }
                 </div>
             </div>
-            <Actions {...props} next={next} prev={prev} validation={() => validation(fieldsValidation(), errors, setErrors, {amount: amount})}/>
+            <Actions {...props} next={next} prev={prev} validation={() => validation(fieldsValidation(), errors, setErrors, {amount: isMonthly ? depositMonthly : amount})}/>
         </div>
     )
 }
 function mapStateToProps(state) {
     return {
         children: state.post.children,
+        childrenProgram: state.post.methods.regular,
         settingsForm: state.settings.dataSettings.formSettings,
         dataPrograms: state.settings.dataSettings.programs,
         currentProgram: state.settings.currentScreen,

@@ -30,3 +30,11 @@ export function addChild(values){
 export function setDisableField(id, newStatus, method = false){
     return {type: 'SET_DISABLE_CHILD', payload: {id: id, newStatus:newStatus, method:method}}
 }
+
+export function reset(){
+    return{type:'RESET'}
+}
+
+export function saveBalanceItem(){
+    return{type: 'SAVE_BALANCE_ITEM'}
+}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 
 import { setUserField } from '../../redux/actions';
@@ -16,7 +16,7 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(function FormStep1(props){
 
     const {account, dispatch} = props;
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState([]);
 
 
     const fieldsValidationOnRegularId = [
@@ -38,6 +38,15 @@ export default connect(mapStateToProps)(function FormStep1(props){
         }
         dispatch(setUserField(e.target.name, value ? value : e.target.value));
     }
+
+    useEffect(()=> {
+        if(!Array.isArray(errors)){
+            validation(account.typeId == 'passport'? fieldsValidationOnPassport : fieldsValidationOnRegularId,
+                errors,
+                setErrors,
+                account)
+        }
+    }, [account]);
 
     return(
         <>

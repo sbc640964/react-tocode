@@ -3,7 +3,12 @@ import _ from 'lodash';
 
 import Range from "./range";
 import {connect} from "react-redux";
-import {currencyFormat, getResultFromAmount} from "../../../api-help";
+import {
+    currencyFormat,
+    getAmountFromMonthlyDeposit,
+    getMinMaxToDepositMonthly,
+    getResultFromAmount
+} from "../../../api-help";
 import {updateChildToMethod} from "../../../redux/actions";
 
 function Sidebar(props){
@@ -27,6 +32,7 @@ function Sidebar(props){
         }
     }
 
+
     function changeAllAmount(value){
         childrenFullData.map(child =>{
             dispatch(updateChildToMethod(false, child.id, value));
@@ -34,8 +40,10 @@ function Sidebar(props){
     }
 
     function changeDeposit(value){
-
+        changeAllAmount(getAmountFromMonthlyDeposit(value, children, programsData));
     }
+
+    const minMax = getMinMaxToDepositMonthly(formSettings.amountField.min, formSettings.amountField.max, children, programsData);
 
     return(
         <div className="sidebar">
@@ -67,11 +75,25 @@ function Sidebar(props){
             </div>
             {Object.keys(_.groupBy(childrenFullData, 'amount')).length == 1 &&
                 <div className="ranges">
-                    <Range min={formSettings.amountField.min} max={formSettings.amountField.max} value={Number(Object.keys(_.groupBy(childrenFullData, 'amount'))[0])} step={1} _onChange={changeAllAmount} label="גובה הלוואה לכל ילד"/>
+                    <Range min={formSettings.amountField.min}
+                           max={formSettings.amountField.max}
+                           value={Number(Object.keys(_.groupBy(childrenFullData, 'amount'))[0])}
+                           step={1}
+                           _onChange={changeAllAmount}
+                           label="גובה הלוואה לכל ילד"
+                           required={true}
+                    />
                 </div>
             }
             <div className="ranges">
-                <Range min={formSettings.amountMonthlyField.min} max={formSettings.amountMonthlyField.max} value={Number(_.sumBy(childrenFullData, 'monthlyDeposit'))} step={1} _onChange={changeDeposit} showNumberInput={false} label="סך הפקדה חודשי"/>
+                <Range min={minMax.min}
+                       max={minMax.max}
+                       value={Number(_.sumBy(childrenFullData, 'monthlyDeposit'))}
+                       step={1}
+                       _onChange={changeDeposit}
+                       label="סך הפקדה חודשי"
+                       required={true}
+                />
             </div>
         </div>
     );

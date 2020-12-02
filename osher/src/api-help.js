@@ -18,14 +18,14 @@ export function validation(fields, errors, setErrors, state, textErrors = null) 
             minNumber: (num, beforeText, afterText) => {
                 return(
                     (beforeText ? beforeText : 'שדה מוגבל למינימום:') +
-                    ` ${num.toString()}` +
+                    ` ${currencyFormat(Number(num))}` +
                     (afterText ? (' ' + afterText) : '')
                 )
             },
             maxNumber: (num, beforeText, afterText) => {
                 return(
                     (beforeText ? beforeText : 'שדה מוגבל למקסימום:') +
-                    ` ${num.toString()}` +
+                    ` ${currencyFormat(Number(num))}` +
                     (afterText ? (' ' + afterText) : '')
                 )
             },
@@ -98,12 +98,6 @@ export function getAmountFromMonthlyDeposit(MonthlyDeposit, children, data, mult
 
         a.innerPrograms = _.sortBy(a.innerPrograms, i => i.yearsOfWaiting);
 
-        for(let key in a.innerPrograms){
-            let _amountMonthly = a.innerPrograms[key].depositAmount / a.innerPrograms[key].depositMonths;
-            a.innerPrograms[key].points =  _amountMonthly / 10;
-            a.innerPrograms[key]._amountMonthly = _amountMonthly;
-        }
-
         let points = [];
         for(let key in groupByYears){
             let program = getNearestAmount(a.innerPrograms, Number(key), 'yearsOfWaiting');
@@ -111,14 +105,12 @@ export function getAmountFromMonthlyDeposit(MonthlyDeposit, children, data, mult
         }
 
         let amountPerPoint = MonthlyDeposit / _.sumBy(points, 'points');
-        for(let key in points){
-            
-            let totalPerChild =  (points[key].points / points[key].countChildren) * amountPerPoint;
-           
-            if( totalPerChild >= points[key].program._amountMonthly){
-                _return = (totalPerChild * points[key].program.depositMonths) * points[key].program.doublingRatio;
-                break;
-            }
+
+        let totalPerChild =  (points[0].points / points[0].countChildren) * amountPerPoint;
+
+        if( totalPerChild >= points[0].program.amountMonthlyDeposit){
+            _return = (totalPerChild * points[0].program.depositMonths) * points[0].program.doublingRatio;
+            break;
         }
     }
     return _return;
@@ -142,7 +134,7 @@ export function getResultFromAmount(amount, age, marriageAge, data){
         yearsOfWaiting: program.yearsOfWaiting,
         monthsOfWaiting: program.monthsOfWaiting,
         depositMonths: program.depositMonths,
-        repaymentMonths: program.monthlyRepayment,
+        repaymentMonths: program.repaymentMonths,
         grantPercentages: program.grantPercentages,
 
     };
@@ -162,13 +154,13 @@ export function getResultFromAmount(amount, age, marriageAge, data){
     // }
 
     //החזר חודשי
-    _return.monthlyRepayment = amount / program.monthlyRepayment;
+    _return.monthlyRepayment = amount / program.repaymentMonths;
 
     //חשב החזר חודש אחרון
-    _return.lastMonthRepayment = _return.monthlyDeposit;
+    _return.lastMonthRepayment = _return.monthlyRepayment;
     if( _return.monthlyRepayment % 1 != 0 ){
         _return.monthlyRepayment = Math.ceil(_return.monthlyRepayment);
-        _return.lastMonthRepayment =  amount - (_return.monthlyRepayment * (program.monthlyRepayment - 1) );
+        _return.lastMonthRepayment =  amount - (_return.monthlyRepayment * (program.repaymentMonths - 1) );
     }
 
     return _return;
@@ -193,4 +185,15 @@ export function currencyFormat(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,').replace('.00', '')
+}
+
+export function getMinMaxToDepositMonthly(_min, _max, children, data){
+
+    let _return = {min:0, max:0};
+
+    for(let c of children){
+        _return.max += getResultFromAmount(_max, c.age, c.marriageAge, data).monthlyDeposit;
+        _return.min += getResultFromAmount(_min, c.age, c.marriageAge, data).monthlyDeposit;
+    }
+    return _return;
 }

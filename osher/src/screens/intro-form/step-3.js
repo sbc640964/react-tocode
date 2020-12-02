@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import Actions from "./components/footer-form-actions";
 import {setChildField, setUserField, addEmptyChild, removeChild} from "../../redux/actions";
@@ -71,12 +71,18 @@ function GroupInputs(props){
         dispatch(removeChild(child.id));
     }
 
+    function getIsFull(){
+        return child.name && child.age && child.marriageAge;
+    }
+
     return(
         <div className="form-field-group row-form">
             <label className="w-45" style={{width: '205px'}}>
                 <span className={show}>שם הילד</span>
                 <input type="text" className="w-100" value={child.name || ''} name="name" onChange={handleChangeUpdateChildField}/>
-                <Errors errors={error}/>
+                { !getIsFull() &&
+                    <Errors errors={error}/>
+                }
             </label>
             <label style={{width: '75px'}}>
                 <span className={show}>גיל</span>

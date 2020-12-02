@@ -10,21 +10,19 @@ const initialState = {
             agreement: true,
             completedForm: false,
         },
+        reset:{
+
+        }
     },
     post: {
         children: [
-            {id: 0, name:'חני', age: '4', marriageAge: '20'},
-            {id: 1, name:'אליעזר שמחה', age: '4', marriageAge: '20'},
-            {id: 2, name:'מושי', age: '12', marriageAge: '19'},
+            {id: 0}
         ],
         methods: {
-            regular: [
-                {childId: 0, amount: 120000},
-                {childId: 1, amount: 120000},
-                {childId: 2, amount: 300000},
-            ],
+            regular: [],
             family:[],
         },
+        balance: [],
     },
     copyPostReVersion: false,
     settings: {
@@ -70,8 +68,10 @@ const initialState = {
                                 depositAmount: 8960,
                                 doublingRatio: 4.017857142857143,
                                 depositMonths: 160,
-                                monthlyRepayment: 145,
+                                repaymentMonths: 145,
                                 grantPercentages: 50,
+                                amountMonthlyDeposit: 56,
+                                points: 5.6,
                             },
                             {
                                 yearsOfWaiting: 12,
@@ -79,8 +79,10 @@ const initialState = {
                                 depositAmount: 9520,
                                 doublingRatio: 3.781512605042017,
                                 depositMonths: 140,
-                                monthlyRepayment: 131,
+                                repaymentMonths: 131,
                                 grantPercentages: 50,
+                                amountMonthlyDeposit: 68,
+                                points: 6.8,
                             },
                         ]
                     },
@@ -93,8 +95,10 @@ const initialState = {
                                 depositAmount: 24000,
                                 doublingRatio: 4.166666666666667,
                                 depositMonths: 160,
-                                monthlyRepayment: 147,
+                                repaymentMonths: 147,
                                 grantPercentages: 50,
+                                amountMonthlyDeposit: 150,
+                                points: 15,
                             },
                             {
                                 yearsOfWaiting: 12,
@@ -102,8 +106,10 @@ const initialState = {
                                 depositAmount: 25200,
                                 doublingRatio: 3.968253968253968,
                                 depositMonths: 140,
-                                monthlyRepayment: 133,
+                                repaymentMonths: 133,
                                 grantPercentages: 50,
+                                amountMonthlyDeposit: 180,
+                                points: 18,
                             },
                         ]
                     },
@@ -116,8 +122,10 @@ const initialState = {
                                 depositAmount: 70400,
                                 doublingRatio: 4.261363636363636,
                                 depositMonths: 160,
-                                monthlyRepayment: 152,
+                                repaymentMonths: 152,
                                 grantPercentages: 50,
+                                amountMonthlyDeposit: 440,
+                                points: 44,
                             },
                             {
                                 yearsOfWaiting: 12,
@@ -125,8 +133,10 @@ const initialState = {
                                 depositAmount: 74200,
                                 doublingRatio: 4.043126684636119,
                                 depositMonths: 140,
-                                monthlyRepayment: 136,
-                                grantPercentages: 50,
+                                repaymentMonths: 530,
+                                grantPercentages: 53,
+                                amountMonthlyDeposit: 530,
+                                points: 53,
                             },
                         ]
                     },
@@ -159,6 +169,7 @@ export default produce((state, action) => {
             break;
         case 'SET_COMPLETED_INTRO_FORM' :
             state.account.userData.completedForm = true;
+            state.account.reset = state.post;
             break;
         case 'ADD_CHILD' :
             //have a add empty child before action - middleware addChildInTable
@@ -187,9 +198,16 @@ export default produce((state, action) => {
             }
             break;
         case 'SET_DISABLE_CHILD' : {
-            let key = state.post.methods[action.payload.method ? action.payload.method : state.settings.currentScreen].findIndex(v => v.childId == action.payload.id);
-            state.post.methods[action.payload.method ? action.payload.method : state.settings.currentScreen][key].disable = action.payload.newStatus;
-        }            break;
+                let key = state.post.methods[action.payload.method ? action.payload.method : state.settings.currentScreen].findIndex(v => v.childId == action.payload.id);
+                state.post.methods[action.payload.method ? action.payload.method : state.settings.currentScreen][key].disable = action.payload.newStatus;
+            }
+            break;
+        case 'RESET' :
+            state.post = state.account.reset;
+            break;
+        case 'SAVE_BALANCE_ITEM' :
+            state.post.balance.push({method: state.settings.currentScreen, program: state.post.methods[state.settings.currentScreen]});
+            break;
     }
 }, initialState);
 
