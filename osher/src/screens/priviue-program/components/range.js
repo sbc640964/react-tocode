@@ -44,7 +44,7 @@ export default function RangeInput(props){
                     <div>
                         <div className="number-input d-flex">
                             <span className="btn" onClick={btnToRangePlus}>+</span>
-                            <input type="number" value={valueB} onBlur={blurInput} onChange={e => setValueB(e.target.value)} min={min} max={max}/>
+                            <input type="number" onKeyDown={} value={valueB} onBlur={blurInput} onChange={e => setValueB(e.target.value)} min={min} max={max}/>
                             <span className="btn" onClick={btnToRangeMinus}>-</span>
                         </div>
                         <Errors errors={errors.value}/>

@@ -18,7 +18,6 @@ export default connect(mapStateToProps)(function FormStep1(props){
     const {account, dispatch} = props;
     const [errors, setErrors] = useState([]);
 
-
     const fieldsValidationOnRegularId = [
         'fullName|required',
         'email|email',
@@ -27,8 +26,8 @@ export default connect(mapStateToProps)(function FormStep1(props){
 
     const fieldsValidationOnPassport = [
         ...fieldsValidationOnRegularId,
-        'state|required',
-        'exp|required'
+        'idState|required',
+        'idExp|required'
     ];
 
     function handleChange(e){
@@ -57,14 +56,20 @@ export default connect(mapStateToProps)(function FormStep1(props){
             <div className="form-field-group">
                 <label>
                     שם מלא
-                    <input type="text" className="w-100" name="fullName" value={account.fullName || ''} onChange={handleChange}/>
+                    <input type="text"
+                            className="w-100"
+                            name="fullName" value={account.fullName || ''}
+                            onChange={handleChange}/>
                     <Errors errors={errors.fullName}/>
                 </label>
             </div>
             <div className="form-field-group">
                 <label>
                     דוא"ל
-                    <input type="email" className="w-100" name="email" value={account.email || ''} onChange={handleChange}/>
+                    <input type="email"
+                            className="w-100"
+                            name="email" value={account.email || ''}
+                            onChange={handleChange}/>
                     <Errors errors={errors.email}/>
                 </label>
             </div>
@@ -112,21 +117,21 @@ export default connect(mapStateToProps)(function FormStep1(props){
                             מדינה
                             <input type="text"
                                    className="w-100"
-                                   name="state"
+                                   name="idState"
                                    value={account.idState || ''}
                                    onChange={handleChange}
                             />
-                            <Errors errors={errors.state}/>
+                            <Errors errors={errors.idState}/>
                         </label>
                         <label className="w-45">
                             תוקף
                             <input type="text"
                                    className="w-100"
-                                   name="exp"
+                                   name="idExp"
                                    value={account.idExp || ''}
                                    onChange={handleChange}
                             />
-                            <Errors errors={errors.exp}/>
+                            <Errors errors={errors.idExp}/>
                         </label>
                     </div>
                 }
