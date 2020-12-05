@@ -1,0 +1,84 @@
+.sbc-settings-page{
+    max-width: 1200px;
+    margin: auto;
+}
+
+.sbc-settings-page .programs-amounts{
+    border: 1px solid #d4d4d4;
+    padding: 16px;
+    border-radius: 6px;
+}
+
+.sbc-settings-page .program-inner label{
+    padding: 12px;
+}
+
+.sbc-settings-page .program-inner{
+    background: #efefef;
+    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid #d9d9d9;
+    margin: 16px 0;
+}
+
+.sbc-settings-page .program-inner:last-child{
+    margin-bottom: 0;
+}
+
+.sbc-settings-page .program-inner:first-child{
+    margin-top: 0;
+}
+
+.sbc-settings-page .program-inner input{
+    font-size: 16px;
+    height: 36px;
+}
+
+.sbc-settings-page .calculate{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.sbc-settings-page .program-inner .form-field-group{
+    justify-content: space-between;
+}
+
+.sbc-settings-page .calculate div{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.sbc-settings-page .calculate .calc-item{
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.sbc-settings-page a.btn{
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.btns-row-left a:not(:last-child){
+    margin-left: 12px;
+}
+.programs-in-amounts{
+    padding: 12px;
+}
+.programs-in-amounts:not(:last-child):after{
+    content: '';
+    width: 100%;
+    height: 32px;
+    border-bottom: 1px solid #d4d4d4;
+    display: block;
+    margin: auto;
+}
+
+.sbc-settings-page .tabs{
+    display: flex;
+    justify-content: space-between;
+}

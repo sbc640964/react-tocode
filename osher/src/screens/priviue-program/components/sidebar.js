@@ -73,28 +73,35 @@ function Sidebar(props){
                     <span className="sum font-weight-bold">{currencyFormat(_.sumBy(childrenFullData, 'depositAmount')/2)}</span>
                 </div>
             </div>
-            {Object.keys(_.groupBy(childrenFullData, 'amount')).length == 1 &&
-                <div className="ranges">
-                    <Range min={formSettings.amountField.min}
-                           max={formSettings.amountField.max}
-                           value={Number(Object.keys(_.groupBy(childrenFullData, 'amount'))[0])}
-                           step={1}
-                           _onChange={changeAllAmount}
-                           label="גובה הלוואה לכל ילד"
-                           required={true}
+            {Object.keys(_.groupBy(childrenFullData, 'amount')).length == 1 ?
+                <>
+                    <div className="ranges">
+                        <Range min={formSettings.amountField.min}
+                               max={formSettings.amountField.max}
+                               value={Number(Object.keys(_.groupBy(childrenFullData, 'amount'))[0])}
+                               step={1}
+                               _onChange={changeAllAmount}
+                               label="גובה הלוואה לכל ילד"
+                               required={true}
+                        />
+                    </div>
+                    <div className="ranges">
+                    <Range min={minMax.min}
+                    max={minMax.max}
+                    value={Number(_.sumBy(childrenFullData, 'monthlyDeposit'))}
+                    step={1}
+                    _onChange={changeDeposit}
+                    label="סך הפקדה חודשי"
+                    required={true}
                     />
+                    </div>
+                </>
+                :
+                <div className="text-center pt-3">
+                    <a className="btn-sbc btn-gold" onClick={() => changeAllAmount(formSettings.amountField.min)}>השווה סכומי הלוואה</a>
                 </div>
+
             }
-            <div className="ranges">
-                <Range min={minMax.min}
-                       max={minMax.max}
-                       value={Number(_.sumBy(childrenFullData, 'monthlyDeposit'))}
-                       step={1}
-                       _onChange={changeDeposit}
-                       label="סך הפקדה חודשי"
-                       required={true}
-                />
-            </div>
         </div>
     );
 }

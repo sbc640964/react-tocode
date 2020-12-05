@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import produce from "immer";
 import _ from 'lodash';
 
-const initialState = {
+const initialState = initialStateServer ? _.cloneDeep(initialStateServer, true) :  {
     account: {
         isLogin: false,
         isService: false,
